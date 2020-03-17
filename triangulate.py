@@ -55,21 +55,39 @@ def triangulate(a,b,c):
             print("Invalid Coordinate (No Possible Coordinate)")
             return -1
 
-x_offset = 100
-y_offset = 100
+#constants
+x_offset = 100 #drawing offset from the top left corner of the screen in pixel (unaffected by scale)
+y_offset = 100 
+
+scale = 10 #pixel scaling (zoom amount)
+
+display_size_x = 700 #pygame window size
+display_size_y = 450
+
+room_size_x = 50 #room size
+room_size_y = 25
+
+node_1_rssi = None
+node_2_rssi = None
+node_3_rssi = None
+
+#pygame initialization
 pygame.init()
-screen = pygame.display.set_mode((700, 450))
+screen = pygame.display.set_mode((display_size_x, display_size_y))
+
+#main loop
 while True:
     for event in pygame.event.get():
+            #close program event
             if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
-    pygame.draw.rect(screen, (255,255,255), pygame.Rect(x_offset,y_offset,500,250))
-    x = triangulate(-120,-120,-120)
-    if x == -1:
-        pygame.display.flip()
+
+    pygame.draw.rect(screen, (255,255,255), pygame.Rect(x_offset,y_offset,room_size_x*scale,room_size_y*scale)) #drawing room
+    x = triangulate(node_1_rssi,node_2_rssi,node_3_rssi)
+    if x == -1: #if no valid coordinate, skip this frame
         continue
-    print(x)
-    pygame.draw.rect(screen, (0,128,255), pygame.Rect((x[0]*10)+x_offset,(x[1]*10)+y_offset,20,20))
-    pygame.display.flip()
+    print(x) #printing triangulate coordinate
+    pygame.draw.rect(screen, (0,128,255), pygame.Rect((x[0]*scale)+x_offset,(x[1]*scale)+y_offset,20,20)) #drawing current location
+    pygame.display.flip() #updating display
 
