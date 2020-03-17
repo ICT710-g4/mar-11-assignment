@@ -1,0 +1,26 @@
+{
+    "config": {
+        "wifi-ssid": {
+            "help": "WiFi SSID",
+            "value": "\"isd\""
+        },
+        "wifi-password": {
+            "help": "WiFi Password",
+            "value": "\"12345678\""
+        }
+    },
+	
+    "target_overrides": {
+        "*": {
+            "platform.stdio-convert-newlines": true,
+            "platform.stdio-baud-rate": 115200,
+			"mbed-mqtt.max-connections": "5",
+            "mbed-mqtt.max-packet-size": "128"
+        },
+        "DISCO_L475VG_IOT01A": {
+            "target.features_add": ["BLE"],
+            "target.extra_labels_add": ["CORDIO", "CORDIO_BLUENRG"],
+			"ism43362.provide-default": true
+        }
+    }
+}

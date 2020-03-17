@@ -67,9 +67,12 @@ display_size_y = 450
 room_size_x = 50 #room size
 room_size_y = 25
 
-node_1_rssi = None
-node_2_rssi = None
-node_3_rssi = None
+#node_1_rssi = None
+#node_2_rssi = None
+#node_3_rssi = None
+node_1_rssi = -120
+node_2_rssi = -120
+node_3_rssi = -120
 
 #pygame initialization
 pygame.init()
