@@ -62,7 +62,8 @@ def triangulate(a,b,c):
         except TypeError:
             print("Invalid Coordinate (No Possible Coordinate)")
             return -1
-
+ROOM_SIZE_X = 15
+ROOM_SIZE_Y = 10
 @app.route('/summary', methods=["GET"])
 def summary():
     node_1_rssi = None
@@ -85,12 +86,13 @@ def summary():
     x = triangulate(node_1_rssi,node_2_rssi,node_3_rssi)
     if x == -1 :
         answer = 'location_not_found'
+        return jsonify('status': answer)
     else :
         if x[0]<0 or x[0] > ROOM_SIZE_X or x[1]<0 or x[1]> ROOM_SIZE_Y :
             answer = 'out'
         else :
             answer = 'in'
-    resp = {'status': answer}
+    resp = {'status': answer, 'x': x[0], 'y': x[1]}
     return jsonify(resp)
 	
 if __name__ == '__main__':
