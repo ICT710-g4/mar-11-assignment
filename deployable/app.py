@@ -86,14 +86,26 @@ def summary():
     x = triangulate(node_1_rssi,node_2_rssi,node_3_rssi)
     if x == -1 :
         answer = 'location_not_found'
-        return jsonify('status': answer)
+        return jsonify({'status':answer})
     else :
         if x[0]<0 or x[0] > ROOM_SIZE_X or x[1]<0 or x[1]> ROOM_SIZE_Y :
             answer = 'out'
         else :
             answer = 'in'
+    resp = {'status':answer, 'x':x[0], 'y':x[1]}
+    return jsonify(resp)
+
+@app.route('/input', methods=["POST"])
+def input():
+    payload = request.get_json(force=True)
+    x = payload['x']
+    y = payload['y']
+    if x<0 or x > ROOM_SIZE_X or y<0 or y> ROOM_SIZE_Y :
+        answer = 'out'
+    else :
+        answer = 'in'
     resp = {'status': answer, 'x': x[0], 'y': x[1]}
     return jsonify(resp)
-	
+    
 if __name__ == '__main__':
     app.run(debug=True, port=8000)
